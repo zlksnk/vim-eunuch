@@ -89,7 +89,7 @@ command! -bar -bang Delete
       \ endif |
       \ unlet s:file
 
-command! -bar -nargs=1 -bang -complete=file Move
+command! -bar -nargs=1 -bang -complete=file MoveWrtProjectDir
       \ let s:src = expand('%:p') |
       \ let s:dst = expand(<q-args>) |
       \ if s:fcall('isdirectory', s:dst) || s:dst[-1:-1] =~# '[\\/]' |
@@ -122,8 +122,8 @@ function! s:Rename_complete(A, L, P) abort
   return join(files + ['..'.s:separator()], "\n")
 endfunction
 
-command! -bar -nargs=1 -bang -complete=custom,s:Rename_complete Rename
-      \ Move<bang> %:h/<args>
+command! -bar -nargs=1 -bang -complete=custom,s:Rename_complete Move
+      \ MoveWrtProjectDir<bang> %:h/<args>
 
 let s:permlookup = ['---','--x','-w-','-wx','r--','r-x','rw-','rwx']
 function! s:Chmod(bang, perm, ...) abort
